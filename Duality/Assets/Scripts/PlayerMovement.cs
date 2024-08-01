@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("Run")]
     [SerializeField] private float playerSpeed;
+    [SerializeField] private float maxRotaion;
     [SerializeField] private Rigidbody2D rb;
+    private float rotation;
 
     private bool isFacingRight = true;
 
@@ -35,10 +39,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Check Ground
-        isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1f, 0.05f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.99f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
     
         //Jump
-        if (Input.GetButtonDown("Jump") )
+        if (Input.GetButtonDown("Jump"))
         {
             coyoteTimeCounter = coyoteTime;
         }
@@ -53,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferCounter-= Time.deltaTime;
         }
 
-        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0)
+        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0 && jumpTimeCounter >= 0)
         {
             jumpBufferCounter = 0;
             rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
@@ -109,11 +113,21 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+
+        //Game Feel
+        if(Mathf.Abs(rb.velocity.x) > 0)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, maxRotaion * transform.localScale.x);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
+        }
     }
 
     void Flip()
     {
-        transform.Rotate(0, 180, 0);
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         isFacingRight = !isFacingRight;
     }
 }
