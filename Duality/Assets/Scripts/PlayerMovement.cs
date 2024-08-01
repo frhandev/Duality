@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float playerSpeed;
     [SerializeField] private float maxRotaion;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
     private float rotation;
 
     private bool isFacingRight = true;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpMultiplayer;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float jumpBufferTime = 0.2f;
+    [SerializeField] private ParticleSystem jumpDust;
     private bool isGrounded;
     private bool isJumping;
     private float jumpTimeCounter;
@@ -63,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2 (rb.velocity.x, jumpForce);
             isJumping = true;
             jumpTimeCounter = 0;
+            animator.SetTrigger("Jump");
+            jumpDust.Play();
         }
 
         if(rb.velocity.y > 0 && isJumping)
@@ -83,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonUp("Jump"))
         {
+            coyoteTimeCounter = 0;
+            jumpBufferCounter = 0;
             isJumping = false;
             jumpTimeCounter = 0;
 
@@ -117,7 +123,14 @@ public class PlayerMovement : MonoBehaviour
         //Game Feel
         if(Mathf.Abs(rb.velocity.x) > 0)
         {
-            transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, maxRotaion * transform.localScale.x);
+            if(isFacingRight)
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, maxRotaion);
+            }
+                else
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -maxRotaion);
+            }
         }
         else
         {
@@ -127,7 +140,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Flip()
     {
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        transform.Rotate(0, 180, 0);
         isFacingRight = !isFacingRight;
+        animator.SetTrigger("Flip");
     }
 }
