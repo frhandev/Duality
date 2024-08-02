@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
     {
         inRealWorld = true;
 
+    }
+
+    void Update()
+    {
         if (inRealWorld)
         {
             dreamWorld.SetActive(false);
@@ -25,10 +29,6 @@ public class GameManager : MonoBehaviour
             realWorld.SetActive(false);
             dreamWorld.SetActive(true);
         }
-    }
-
-    void Update()
-    {
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             WorldSwitch();
@@ -37,23 +37,13 @@ public class GameManager : MonoBehaviour
 
     void WorldSwitch()
     {
-        if (inRealWorld)
-        {
-            dreamWorld.SetActive(false);
-            realWorld.SetActive(true);
-        }
-        else
-        {
-            realWorld.SetActive(false);
-            dreamWorld.SetActive(true);
-        }
         inRealWorld = !inRealWorld;
     }
 
     public void Died()
     {
-        animator.SetTrigger("Restart");
         Invoke("Die", 1f);
+        animator.SetTrigger("Restart");
     }
 
     private void Die()
