@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject dreamWorld;
     [SerializeField] GameObject realWorld;
+    [SerializeField] Animator animator;
      public bool inRealWorld;
 
     void Start()
@@ -45,5 +48,16 @@ public class GameManager : MonoBehaviour
             dreamWorld.SetActive(true);
         }
         inRealWorld = !inRealWorld;
+    }
+
+    public void Died()
+    {
+        animator.SetTrigger("Restart");
+        Invoke("Die", 1f);
+    }
+
+    private void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
