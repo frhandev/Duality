@@ -9,11 +9,27 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float enemySpeed = 3.0f;
     [SerializeField] private Animator animator;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private Transform[] limits;
+
+    bool isFacingRight = true;
+
+    private void Update()
+    {
+        if(Mathf.Abs(transform.position.x - limits[0].position.x) <= 0.2f && isFacingRight)
+        {
+            Flip();
+        } 
+        else if(Mathf.Abs(transform.position.x - limits[1].position.x) <= 0.2f && !isFacingRight)
+        {
+            Flip();
+        }
+    }
 
     void FixedUpdate()
     {
         rb.velocity = transform.right *enemySpeed;
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,14 +39,10 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Flip();
-    }
-
     void Flip()
     {
-        transform.Rotate(0, 180, 0);
+        enemySpeed *= -1;
         animator.SetTrigger("Flip");
+        isFacingRight = !isFacingRight;
     }
 }
