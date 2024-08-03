@@ -9,7 +9,7 @@ public class Winning : MonoBehaviour
     {
         if(collision.GetComponent<PlayerMovement>() != null)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+            FindObjectOfType<GameManager>().NextLevelInvoker();
         }
     }
 }

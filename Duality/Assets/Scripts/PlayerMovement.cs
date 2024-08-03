@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isFacingRight = true;
 
-    [Header("Jump Values")]
+    [Header("Jump")]
+    [SerializeField] private AudioSource jumpSFX;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
@@ -67,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
             jumpTimeCounter = 0;
             animator.SetTrigger("Jump");
             jumpDust.Play();
+            jumpSFX.Play();
         }
 
         if(rb.velocity.y > 0 && isJumping)

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8445071127608502687}
   - component: {fileID: 966540137308196287}
+  - component: {fileID: 1665027826578858879}
   m_Layer: 0
   m_Name: Winning Protal
   m_TagString: Untagged
@@ -77,3 +78,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1665027826578858879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308562834681591743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5fd771075888841b38300a86d5e64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
